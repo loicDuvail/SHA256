@@ -1,7 +1,13 @@
 import sha256 from "./sha256";
 
-const test = (M: string) => console.log(`"${M}" =sha256=> ${sha256(M)}`);
+const test = (M: string) =>
+  console.log(
+    `\x1b[42m ${M} \x1b[0m \x1b[36m=sha256=>  \x1b[33m${sha256(M)} \x1b[0m\n`
+  );
 
 test("");
 test("abc");
 test("c70938b77acd3f81077d754ef23fff244c377c17df96ec4b864e70c4b81c4ec6");
+test(
+  "c70938b77acd3f81077d754ef23fff244c377c17df96ec4b864e70c4b81c4ec6c70938b77acd3f81077d754ef23fff244c377c17df96ec4b864e70c4b81c4ec6c70938b77acd3f81077d754ef23fff244c377c17df96ec4b864e70c4b81c4ec6c70938b77acd3f81077d754ef23fff244c377c17df96ec4b864e70c4b81c4ec6c70938b77acd3f81077d754ef23fff244c377c17df96ec4b864e70c4b81c4ec6c70938b77acd3f81077d754ef23fff244c377c17df96ec4b864e70c4b81c4ec6c70938b77acd3f81077d754ef23fff244c377c17df96ec4b864e70c4b81c4ec6c70938b77acd3f81077d754ef23fff244c377c17df96ec4b864e70c4b81c4ec6"
+);

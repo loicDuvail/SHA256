@@ -5,12 +5,12 @@ const ROTR = (x, d, size = 32) => {
     d %= size;
     return ((Math.pow(2, d) - 1) & x) * Math.pow(2, (size - d)) + (x >>> d);
 };
-const Ch = (x, y, z) => ((x & y) ^ (~x & z)) >>> 0;
-const Maj = (x, y, z) => ((x & y) ^ (x & z) ^ (y & z)) >>> 0;
-const S = (a, b, c) => (x) => (ROTR(x, a) ^ ROTR(x, b) ^ ROTR(x, c)) >>> 0;
+const Ch = (x, y, z) => (x & y) ^ (~x & z);
+const Maj = (x, y, z) => (x & y) ^ (x & z) ^ (y & z);
+const S = (a, b, c) => (x) => ROTR(x, a) ^ ROTR(x, b) ^ ROTR(x, c);
 const S0 = S(2, 13, 22);
 const S1 = S(6, 11, 25);
-const s = (a, b, c) => (x) => (ROTR(x, a) ^ ROTR(x, b) ^ (x >>> c)) >>> 0;
+const s = (a, b, c) => (x) => ROTR(x, a) ^ ROTR(x, b) ^ (x >>> c);
 const s0 = s(7, 18, 3);
 const s1 = s(17, 19, 10);
 const K = [
@@ -87,7 +87,11 @@ const sha256 = (M) => {
         ];
     });
     const digest = H[blocks.length]
-        .map((v) => "00000000".slice(0, -v.toString(16).length) + v.toString(16))
+        .map((v) => {
+        v >>>= 0;
+        const hex = v.toString(16);
+        return "00000000".slice(0, -hex.length) + hex;
+    })
         .join("");
     return digest;
 };
